@@ -16,33 +16,12 @@ demographic factors (age, sex, race, ect.), the types of apps they use,
 time spent on different devices, preferred type of media, and other
 issues regarding media consumption.
 
+The first step is converting factor variables to features and converting
+answers to a question that was reported in multiple columns to one
+column
+
 ``` r
 masterDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
-demographicDF <- masterDF %>% 
-    select(c(2:17)) 
-    
-demographicDF <- demographicDF %>% 
-    select(c(-3, -4,-15))
-
-colnames(demographicDF) <- c("Age", "Gender", "Region", "Employment", "Race", 
-                             "Children", "Child0_4", "Child5_9", "Child10_13", 
-                             "Child14_18", "Child19_25", "Child26", "Income")
-
-factor_cols = c(2:6, 13)
-demographicDF <- demographicDF %>% 
-    mutate_at(factor_cols, as.factor) %>% 
-    mutate(ChildAge = case_when(
-        Child0_4 == 'Yes' ~ '0-4',
-        Child5_9 == 'Yes' ~ "5-9",
-        Child10_13 == "Yes" ~ "10-13",
-        Child14_18 == "Yes" ~ "14-18",
-        Child19_25 == "Yes" ~ "19-25",
-        Child26 == "Yes" ~ "26"
-    )) %>% 
-    mutate(ChildAge = as.factor(ChildAge)) %>% 
-    select(-c(7:12))
-
-
 head(demographicDF)
 ```
 

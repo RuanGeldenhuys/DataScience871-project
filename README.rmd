@@ -17,6 +17,7 @@ library(tidyverse)
 
 Code files:
 ```{r echo=FALSE}
+masterDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
 list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
@@ -28,6 +29,5 @@ The first step is converting factor variables to features and converting answers
 ```{r}
 masterDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
 head(demographicDF)
-    
 
 ```
