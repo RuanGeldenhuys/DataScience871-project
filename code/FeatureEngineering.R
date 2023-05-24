@@ -1,4 +1,4 @@
-##Data Cleaning Feature Engineering
+##Data Cleaning and Feature Engineering
 
 #Demographic features
 demographicDF <- masterDF %>%
@@ -23,3 +23,26 @@ demographicDF <- demographicDF %>%
     )) %>%
     mutate(ChildAge = as.factor(ChildAge)) %>%
     select(-c(7:12))
+
+#Media features
+techownedDF <- masterDF %>%
+    select(c(18:37))
+
+newHeaders <- ExtractColumnHeaders(colnames(techownedDF)) # Call the cleaning function
+
+colnames(techownedDF) <- newHeaders
+colnames(techownedDF)[3]<- "StreamingBox"
+colnames(techownedDF)[4]<- "StreamingFob"
+colnames(techownedDF)[9]<- "Router"
+
+techownedDF <- data.frame(lapply(techownedDF, factor))
+
+YesString <- 'Yes'
+yes_counts <- apply(techownedDF, 1, function(row) sum(row == YesString))
+techownedDF <- cbind(techownedDF, yes_counts)
+
+
+
+
+
+
