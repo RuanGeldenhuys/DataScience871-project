@@ -1,7 +1,6 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+title: "Data Science 871 project"
+output: github_document
 ---
 
 # Purpose
@@ -21,4 +20,8 @@ library(tidyverse)
 list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
+##This is a test chunk
+```{r}
+1+1
+```
 
