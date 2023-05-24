@@ -3,25 +3,29 @@ title: "Data Science 871 project"
 output: github_document
 ---
 
-# Purpose
+## Media Consumption and Willingness to upgrade internet package.
 
-Purpose of this work folder.
+The purpose of this project is to use survey data in order to determine which factors are important predictors of whether individuals would be willing to upgrade their internet packages. 
 
-Ideally store a minimum working example data set in data folder.
+## Cleanup and libraries
 
-Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
+```{r include=FALSE }
 
+rm(list = ls()) 
+gc()
 
-```{r}
-
-rm(list = ls()) # Clean your environment:
-gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
 library(tidyverse)
+```
+
+Code files:
+```{r echo=FALSE}
 list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
-##This is a test chunk
-```{r}
-1+1
-```
+## Data loading and cleaning
+The data set contains survey responses from 2131 individuals regarding demographic factors (age, sex, race, ect.), the types of apps they use, time spent on different devices, preferred type of media, and other issues regarding media consumption. 
 
+```{r}
+masterDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
+
+```
