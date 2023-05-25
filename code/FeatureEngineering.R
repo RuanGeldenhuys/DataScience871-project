@@ -25,6 +25,8 @@ demographicDF <- demographicDF %>%
     select(-c(7:12))
 
 #Media features
+
+#Tech owned
 techownedDF <- masterDF %>%
     select(c(18:37))
 
@@ -41,8 +43,29 @@ YesString <- 'Yes'
 yes_counts <- apply(techownedDF, 1, function(row) sum(row == YesString))
 techownedDF <- cbind(techownedDF, yes_counts)
 
+#Tech preferences
+techprefDF <- masterDF[,c(60:78)]
+prefnames <- paste('pref', colnames(techownedDF), sep = '_')
+prefnames <- prefnames[-c(20:21)]
+colnames(techprefDF) <- prefnames               #This code sets up the ranking df
+techprefDF <- techprefDF %>%                    #1,2,3 indicate position - 0 indicates no rank
+    replace(., techprefDF == '#NULL!', 0)
+techprefDF <- as.data.frame(lapply(techprefDF, as.numeric))
 
 
+#Time spent on each activity each device
+movieDF <- masterDF[,c(80:83)] #Extract the columns indicating time spent for each on activity on each device
+colnames(movieDF) <- c('MovieTime_Smartphone', 'MovieTime_Tablet', 'MovieTime_Computer', 'MovieTime_TV')
 
+sportDF <- masterDF[,c(84:87)]
+colnames(sportDF) <- c('SportTime_Smartphone', 'SportTime_Tablet', 'SportTime_Computer', 'SportTime_TV')
 
+tvshowsDF <- masterDF[,c(88:91)]
+colnames(tvshowsDF) <- c('tvTime_Smartphone', 'tvTime_Tablet', 'tvTime_Computer', 'tvTime_TV')
+
+timespentDF <- cbind(movieDF, sportDF, tvshowsDF)
+
+#Next we do app usage
+#Subscriptions
+#Entertainment activities
 

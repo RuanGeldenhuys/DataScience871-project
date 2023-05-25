@@ -5,7 +5,7 @@ output: github_document
 
 ## Media Consumption and Willingness to upgrade internet package.
 
-The purpose of this project is to use survey data in order to determine which factors are important predictors of whether individuals would be willing to upgrade their internet packages. 
+The purpose of this project is to use survey data in order to determine which factors are important predictors of whether individuals would be willing to upgrade their internet packages. All code and functions are stored under the "code" folder. This readme is solely for visualization of data and results.
 
 ```{r include=FALSE }
 
@@ -25,12 +25,13 @@ list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.
 ## Data loading and cleaning
 The data set contains survey responses from 2131 individuals regarding demographic factors (age, sex, race, ect.), the types of apps they use, time spent on different devices, preferred type of media, and other issues regarding media consumption. 
 
-The first step is converting factor variables to features and converting answers to a question that was reported in multiple columns to one column
+The features can be broadly broken down into 6 categories, namely demographic factors, technology owned by individuals, device usage, app usage, user subscriptions and lastly, what individuals' preferred form of entertainment are.
 
 ```{r}
 masterDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
 str(demographicDF)
 str(techownedDF)
+str(timespentDF)
 
 
 ```
