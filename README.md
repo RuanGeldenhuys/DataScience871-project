@@ -5,7 +5,9 @@ Data Science 871 project
 
 The purpose of this project is to use survey data in order to determine
 which factors are important predictors of whether individuals would be
-willing to upgrade their internet packages.
+willing to upgrade their internet packages. All code and functions are
+stored under the “code” folder. This readme is solely for visualization
+of data and results.
 
 Code files:
 
@@ -14,49 +16,49 @@ Code files:
 The data set contains survey responses from 2131 individuals regarding
 demographic factors (age, sex, race, ect.), the types of apps they use,
 time spent on different devices, preferred type of media, and other
-issues regarding media consumption.
+issues regarding media consumption. I restrict this data set to include
+only responses from individuals that have internet access.
 
-The first step is converting factor variables to features and converting
-answers to a question that was reported in multiple columns to one
-column
-
-``` r
-masterDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
-str(demographicDF)
-```
-
-    ## 'data.frame':    2131 obs. of  8 variables:
-    ##  $ Age       : num  36 26 32 25 28 33 35 36 74 16 ...
-    ##  $ Gender    : Factor w/ 2 levels "Female","Male": 2 1 1 1 2 2 2 2 2 1 ...
-    ##  $ Region    : Factor w/ 4 levels "Midwest","Northeast",..: 3 2 2 4 1 2 4 1 2 2 ...
-    ##  $ Employment: Factor w/ 5 levels "Employed full-time or part-time",..: 1 1 1 1 4 3 1 1 2 4 ...
-    ##  $ Race      : Factor w/ 10 levels "African American",..: 10 10 10 10 10 10 10 10 10 10 ...
-    ##  $ Children  : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 1 2 ...
-    ##  $ Income    : Factor w/ 6 levels "$100,000 to $299,999",..: 3 3 5 5 3 3 1 1 5 1 ...
-    ##  $ ChildAge  : Factor w/ 6 levels "0-4","10-13",..: 2 1 1 1 1 6 2 6 NA 3 ...
+The features can be broadly broken down into 6 categories, namely
+demographic factors, technology owned by individuals, device usage, app
+usage, user subscriptions and lastly, what individuals’ preferred form
+of entertainment are.
 
 ``` r
-str(techownedDF)
+NAs <- 0
+for (i in 1:nrow(appDF)) {
+    if (any(appDF[i,] == "#NULL!") == TRUE) {  #Checking how many users did not answer this question
+        NAs <- NAs + 1
+    }
+}
+NAs
 ```
 
-    ## 'data.frame':    2131 obs. of  20 variables:
-    ##  $ FlatPanelTelevision       : Factor w/ 2 levels "No","Yes": 1 1 1 2 2 2 1 1 2 2 ...
-    ##  $ DigitalVideoRecorder      : Factor w/ 2 levels "No","Yes": 1 1 1 2 1 2 1 1 1 1 ...
-    ##  $ StreamingBox              : Factor w/ 2 levels "No","Yes": 1 1 1 1 2 2 1 1 1 1 ...
-    ##  $ StreamingFob              : Factor w/ 2 levels "No","Yes": 1 2 1 2 1 1 1 1 1 1 ...
-    ##  $ OverTheAirDigitalTVAntenna: Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ BluRayDiscPlayerDVDPlayer : Factor w/ 2 levels "No","Yes": 1 2 1 2 1 1 1 1 1 2 ...
-    ##  $ GamingConsole             : Factor w/ 2 levels "No","Yes": 2 1 1 2 2 1 1 1 1 2 ...
-    ##  $ PortableVideoGamePlayer   : Factor w/ 2 levels "No","Yes": 1 2 2 2 1 2 1 1 1 1 ...
-    ##  $ Router                    : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ DesktopComputer           : Factor w/ 2 levels "No","Yes": 1 1 1 1 2 2 2 2 1 1 ...
-    ##  $ LaptopComputer            : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 1 1 2 2 2 ...
-    ##  $ Tablet                    : Factor w/ 2 levels "No","Yes": 1 2 1 2 1 1 2 1 2 2 ...
-    ##  $ DedicatedEBookReader      : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ Smartphone                : Factor w/ 2 levels "No","Yes": 1 2 1 2 2 1 1 1 2 2 ...
-    ##  $ BasicMobilePhone          : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ SmartWatch                : Factor w/ 2 levels "No","Yes": 2 2 1 1 1 2 1 1 1 1 ...
-    ##  $ FitnessBand               : Factor w/ 2 levels "No","Yes": 1 1 1 1 2 1 1 1 1 1 ...
-    ##  $ VirtualRealityHeadset     : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ Drone                     : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 2 1 1 1 ...
-    ##  $ NoneOfTheAbove            : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
+    ## [1] 412
+
+Under closer inspection it would appear that a total of 412 survey
+respondents did not answer the question regarding app usage. Thus, for
+now, I exclude this feature from further analysis.
+
+\##Target Variable The target variable is turned into a factor variable
+indicating a 1 if they are willing to upgrade their internet package and
+a 0 if they are not.
+
+``` r
+Q29 <- masterDF[,151]
+
+UpgradeInternet <- ifelse(Q29 == "I am not willing to pay more for faster download speeds as my current speed is sufficient for my needs" |
+                  Q29 == "I prefer faster speed but I am unwilling to pay more than I already do", 0, 1)
+UpgradeInternet <- as.factor(UpgradeInternet)
+head(UpgradeInternet)
+```
+
+    ## [1] 1 1 1 0 1 1
+    ## Levels: 0 1
+
+``` r
+summary(UpgradeInternet)
+```
+
+    ##   0   1 
+    ## 814 744

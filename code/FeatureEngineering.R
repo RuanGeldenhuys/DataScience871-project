@@ -1,5 +1,5 @@
 ##Data Cleaning and Feature Engineering
-
+masterDF <- initialDF[initialDF[,130] == "Yes",]
 #Demographic features
 demographicDF <- masterDF %>%
     select(c(2:17))                 #Select relevant demographic features
@@ -66,6 +66,51 @@ colnames(tvshowsDF) <- c('tvTime_Smartphone', 'tvTime_Tablet', 'tvTime_Computer'
 timespentDF <- cbind(movieDF, sportDF, tvshowsDF)
 
 #Next we do app usage
+appDF <- masterDF[,c(92:126)]
+headers <- colnames(appDF)
+string <- str_extract(headers, "(?<=\\.\\.).*" )
+string <- str_extract(string, "(?<=\\.\\.).*" )
+string <- str_extract(string, "(?<=\\.\\.).*" )
+string <- str_extract(string, "(?<=\\.\\.).*" )
+colnames(appDF) <-  string
+
+counter <- 0
+for (i in 1:nrow(appDF)) {
+    if (any(appDF[i,] == "#NULL!") == TRUE) {  #Checking how many users did not answer this question
+        counter <- counter + 1
+    }
+}
+counter
+
 #Subscriptions
-#Entertainment activities
+subDF <- masterDF[,c(129:138)]
+subHeader <- ExtractColumnHeaders(colnames(subDF))
+colnames(subDF) <- subHeader
+subDF <- data.frame(lapply(subDF, factor))
+subDF <- subDF[,-2]
+
+#Subscription preferences
+subprefDF <- masterDF[,c(141:150)]
+colnames(subprefDF)<- subHeader
+subprefDF <- subprefDF %>%
+    replace(., subprefDF == '#NULL!', 0)
+subprefDF <- subprefDF[,-2]
+subprefDF <- as.data.frame(lapply(subprefDF, as.numeric))
+
+#Entertainment activities rankings
+activityDF <- masterDF[,c(152:161)]
+colnames(activityDF) <- c('LiveEvents', 'Movies', 'TV', 'Music', 'Books',
+                          'Magazines', 'Newspapers', 'Radio', 'Video Games',
+                          'InternetSocial')
+activityDF <- activityDF %>%
+    replace(., activityDF == '#NULL!', 0)
+activityDF <- as.data.frame(lapply(activityDF, as.numeric))
+
+
+##Target variable
+Q29 <- masterDF[,151]
+
+UpgradeInternet <- ifelse(Q29 == "I am not willing to pay more for faster download speeds as my current speed is sufficient for my needs" |
+                  Q29 == "I prefer faster speed but I am unwilling to pay more than I already do", 0, 1)
+UpgradeInternet <- as.factor(UpgradeInternet)
 
