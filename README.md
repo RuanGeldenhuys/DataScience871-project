@@ -62,3 +62,17 @@ summary(UpgradeInternet)
 
     ##   0   1 
     ## 814 744
+
+Below are breakdowns of the Age and Gender distributions of the data.
+
+``` r
+ageHist
+```
+
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+``` r
+genderBar
+```
+
+![](README_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->

@@ -22,16 +22,21 @@ library(caret)
 ```
 
 Code files:
-```{r echo=FALSE}
+
+```{r include=FALSE}
 initialDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
-list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+source('code/DataCleaningFunctions.R')
+source('code/FeatureEngineering.R')
+source('code/EDA.R')
+source('code/Modeling.R')
+#('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
 ## Data loading and cleaning
+
 The data set contains survey responses from 2131 individuals regarding demographic factors (age, sex, race, ect.), the types of apps they use, time spent on different devices, preferred type of media, and other issues regarding media consumption. I restrict this data set to include only responses from individuals that have internet access.
 
 The features can be broadly broken down into 6 categories, namely demographic factors, technology owned by individuals, device usage, app usage, user subscriptions and lastly, what individuals' preferred form of entertainment are.
-
 
 ```{r}
 NAs <- 0
@@ -42,10 +47,11 @@ for (i in 1:nrow(appDF)) {
 }
 NAs
 ```
+
 Under closer inspection it would appear that a total of 412 survey respondents did not answer the question regarding app usage. Thus, for now, I exclude this feature from further analysis.
 
-##Target Variable
-The target variable is turned into a factor variable indicating a 1 if they are willing to upgrade their internet package and a 0 if they are not.
+##Target Variable The target variable is turned into a factor variable indicating a 1 if they are willing to upgrade their internet package and a 0 if they are not.
+
 ```{r}
 Q29 <- masterDF[,151]
 
@@ -55,10 +61,10 @@ UpgradeInternet <- as.factor(UpgradeInternet)
 head(UpgradeInternet)
 summary(UpgradeInternet)
 ```
-Below is a histogram of the Age distribution
+
+Below are breakdowns of the Age and Gender distributions of the data.
+
 ```{r}
 ageHist
+genderBar
 ```
-
-
-
