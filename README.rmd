@@ -12,7 +12,10 @@ The purpose of this project is to use survey data in order to determine which fa
 rm(list = ls()) 
 gc()
 
+
 library(tidyverse)
+library(ggpubr)
+library(hrbrthemes)
 library(stringr)
 library(ranger)
 library(caret)
@@ -51,6 +54,10 @@ UpgradeInternet <- ifelse(Q29 == "I am not willing to pay more for faster downlo
 UpgradeInternet <- as.factor(UpgradeInternet)
 head(UpgradeInternet)
 summary(UpgradeInternet)
+```
+Below is a histogram of the Age distribution
+```{r}
+ageHist
 ```
 
 
