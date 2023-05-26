@@ -21,9 +21,9 @@ demographicDF <- demographicDF %>%
         Child19_25 == "Yes" ~ "19-25",
         Child26 == "Yes" ~ "26"
     )) %>%
+    mutate(ChildAge = ifelse(is.na(ChildAge), 'None', ChildAge)) %>%
     mutate(ChildAge = as.factor(ChildAge)) %>%
     select(-c(7:12))
-
 #Media features
 
 #Tech owned
@@ -91,7 +91,8 @@ subDF <- subDF[,-2]
 
 #Subscription preferences
 subprefDF <- masterDF[,c(141:150)]
-colnames(subprefDF)<- subHeader
+subprefHeader <- paste('pref', subHeader, sep = '_')
+colnames(subprefDF)<-subprefHeader
 subprefDF <- subprefDF %>%
     replace(., subprefDF == '#NULL!', 0)
 subprefDF <- subprefDF[,-2]
@@ -113,4 +114,7 @@ Q29 <- masterDF[,151]
 UpgradeInternet <- ifelse(Q29 == "I am not willing to pay more for faster download speeds as my current speed is sufficient for my needs" |
                   Q29 == "I prefer faster speed but I am unwilling to pay more than I already do", 0, 1)
 UpgradeInternet <- as.factor(UpgradeInternet)
+
+finalDF <- cbind(UpgradeInternet, demographicDF, techownedDF, techprefDF,
+                 timespentDF, subDF, subprefDF, activityDF)
 
