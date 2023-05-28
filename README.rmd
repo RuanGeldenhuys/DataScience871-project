@@ -50,7 +50,8 @@ NAs
 
 Under closer inspection it would appear that a total of 412 survey respondents did not answer the question regarding app usage. Thus, for now, I exclude this feature from further analysis.
 
-##Target Variable The target variable is turned into a factor variable indicating a 1 if they are willing to upgrade their internet package and a 0 if they are not.
+##Target Variable 
+The target variable is turned into a factor variable indicating a 1 if they are willing to upgrade their internet package and a 0 if they are not.
 
 ```{r}
 Q29 <- masterDF[,151]
