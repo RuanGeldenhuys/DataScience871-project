@@ -19,16 +19,17 @@ rf1 <- ranger(
 rf1
 toc()
 
-# #Hyper parameter tuning
-# hyper_grid <- expand.grid(
-#     mtry            = floor(n_features * c(.05, .10, .15, .20, .25, .30)),
-#     min.node.size   = c(1, 3, 5, 10),
-#     replace         = c(TRUE, FALSE),
-#     sample.fraction = c(.5, .63, .8, 1),
-#     num.trees       = n_features* c(5,10,15,20),
-#     predError       = NA,
-#     rmse            = NA
-# )
+#Hyper parameter tuning
+hyper_grid <- expand.grid(
+    mtry            = floor(n_features * c(.05, 0.75, .10, 0.125, .15, .175, .20, .225, .25, .275, .30)),
+    min.node.size   = c(1, 3, 5, 7, 10),
+    replace         = c(TRUE, FALSE),
+    sample.fraction = c(.5, .63, .8, 1),
+    num.trees       = n_features* c(5,7,10,13,15,17,20),
+    splitrule       = c('gini', 'extratrees'),
+    predError       = NA,
+    rmse            = NA
+)
 # tic()
 # for(i in seq_len(nrow(hyper_grid))) {
 #     # fit model for ith hyperparameter combination
@@ -40,6 +41,7 @@ toc()
 #         min.node.size   = hyper_grid$min.node.size[i],
 #         replace         = hyper_grid$replace[i],
 #         sample.fraction = hyper_grid$sample.fraction[i],
+#         splitrule       = hyper_grid$splitrule[i],
 #         verbose         = FALSE,
 #         seed            = 246,
 #         respect.unordered.factors = 'order',
@@ -57,11 +59,11 @@ toc()
 bestmod1 <- ranger(
     UpgradeInternet ~ .,
     data = train_set,
-    mtry = 4,
+    mtry = 11,
     min.node.size = 10,
     replace = FALSE,
-    sample.fraction = 0.8,
-    num.trees = 440,
+    sample.fraction = 0.63,
+    num.trees = 616,
     seed = 246,
     importance = 'impurity',
     respect.unordered.factors = 'order'
