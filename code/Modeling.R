@@ -72,4 +72,3 @@ bestmod1
 VarImp <- importance(bestmod1)
 VarImp <- sort(VarImp, decreasing = TRUE)
 VarImp10 <- head(VarImp,10)
-plot(VarImp10)

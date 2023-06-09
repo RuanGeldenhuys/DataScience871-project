@@ -69,4 +69,23 @@ Below are breakdowns of the demographic factors of the dataset
 demogPlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> Univariate
+Analysis
+
+``` r
+techBar
+```
+
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+watchBar
+```
+
+![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+
+``` r
+subBar
+```
+
+![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
