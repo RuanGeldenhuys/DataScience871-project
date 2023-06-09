@@ -71,7 +71,12 @@ demogPlot
 Univariate Analysis
 ```{r}
 techBar
+```
+```{r}
 watchBar
+```
+
+```{r}
 subBar
 ```
 
