@@ -69,26 +69,4 @@ Below are breakdowns of the demographic factors of the dataset
 demogPlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> Univariate
-Analysis
-
-``` r
-techBar
-```
-
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
-
-``` r
-watchBar
-```
-
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
-
-``` r
-subBar
-```
-
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
-
-Above are univariate analysis of 3 crucial features in the model.
-Discussion to follow
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
