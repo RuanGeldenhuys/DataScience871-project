@@ -68,3 +68,13 @@ Below are breakdowns of the demographic factors of the dataset
 ```{r fig.height=6}
 demogPlot
 ```
+
+Univariate Analysis
+Below follows univariate analysis for 3 crucial features in the model.
+```{r}
+techBar
+watchBar
+subBar
+
+```
+
