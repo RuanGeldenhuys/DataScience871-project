@@ -89,3 +89,6 @@ subBar
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
+
+Above are univariate analysis of 3 crucial features in the model.
+Discussion to follow
