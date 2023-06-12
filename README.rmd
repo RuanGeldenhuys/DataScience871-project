@@ -123,4 +123,7 @@ ageDensityPlot
 ```{r}
 techDensityPlot
 ```
+```{r}
+arrangeViolins()
+```
 

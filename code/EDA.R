@@ -128,7 +128,8 @@ ageDensityPlot <- ggplot(age_BIdf, aes(x = Age, fill = factor(UpgradeInternet)))
     geom_density(alpha = 0.5) +
     labs(x = "Age", y = "Density", fill = "Upgrade Internet") +
     scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
-    ggtitle("Age vs Upgrading Internet")
+    ggtitle("Age vs Upgrading Internet")+
+    theme_pubr()
 ageDensityPlot
 
 #Techowned
@@ -139,5 +140,41 @@ techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_counts, fill = factor(Upg
     geom_density(alpha = 0.5) +
     labs(x = "Amount of devices owned", y = "Density", fill = "Upgrade Internet") +
     scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
-    ggtitle("Technology ownership vs Upgrading Internet")
+    ggtitle("Technology ownership vs Upgrading Internet") +
+    theme_pubr()
 techDensityPlot
+
+#Wacthtime
+watchtime_BIdf <- cbind(finalDF[,1], watchtimeDF)
+colnames(watchtime_BIdf)[1] <- "UpgradeInternet"
+movie_BIdf <- watchtime_BIdf %>%
+    select(c(1:5))
+tv_BIdf <- watchtime_BIdf %>%
+    select(c(1,6:9))
+sport_BIdf <- watchtime_BIdf %>%
+    select(c(1,10:13))
+
+
+plotViolins <- function(dat, title){
+    df_long <- reshape2::melt(dat, id.vars = "UpgradeInternet")
+
+    # Create violin plots with overlapping categories based on UpgradeInternet
+    watchtimeViolins <- ggplot(df_long, aes(x = variable, y = value, fill = factor(UpgradeInternet))) +
+        geom_violin(scale = "width", trim = FALSE, position = "identity", alpha = 0.5) +
+        scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
+        labs(x = "Variable", y = "Value", fill = "Upgrade Internet")+
+        ggtitle(title) +
+        scale_x_discrete(labels = c("Smartphone", "Tablet", "Computer", "TV"))
+    return(watchtimeViolins)
+}
+
+arrangeViolins <- function(dat1,dat2,dat3){
+    v1 <- plotViolins(dat1,)
+    v2 <- plotViolins(dat2)
+    v3 <- plotViolins(dat3)
+
+    arranged <- ggarrange(v1,v2,v3, ncol = 1, nrow = 3)
+    return(arranged)
+}
+
+

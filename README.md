@@ -137,3 +137,23 @@ subscribed to the following services:
 - PayTV
 
 Notably, video streaming services are nearly 50/50.
+
+### Bivariate Analysis
+
+``` r
+ageDensityPlot
+```
+
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+techDensityPlot
+```
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+``` r
+watchtimeViolins
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
