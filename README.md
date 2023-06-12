@@ -38,7 +38,10 @@ NAs
 
 Under closer inspection it would appear that a total of 412 survey
 respondents did not answer the question regarding app usage. Thus, for
-now, I exclude this feature from further analysis.
+now, I exclude this feature from further analysis. Additionally, I
+exclude any individuals who do not have an internet connection as they
+serve no purpose in determining the target variable of upgrading
+internet.
 
 \##Target Variable The target variable is turned into a factor variable
 indicating a 1 if they are willing to upgrade their internet package and
@@ -63,7 +66,14 @@ summary(UpgradeInternet)
     ##   0   1 
     ## 814 744
 
-Below are breakdowns of the demographic factors of the dataset
+In total 814 respondents indicated that they will not be willing to
+upgrade their internet package, while 744 respondents would.
+
+## Exploratory Data analysis
+
+### Demographics
+
+Below are breakdowns of the demographic factors of the dataset.
 
 ``` r
 demogPlot
@@ -71,8 +81,16 @@ demogPlot
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-Univariate Analysis Below follows univariate analysis for 3 crucial
-features in the model.
+A large portion of individuals who participated in the survey are
+elderly, as can be seen from the Age distribution that peaks around late
+60’s to mid 70’s. The surveyed is notably lacking in middle aged
+respondents. Gender is split rather equally. The vast majority of
+respondents were white and had an income ranging from \$50,000 to
+\$99,999.
+
+### Univariate Analysis
+
+Below follows univariate analysis for 3 crucial features in the model.
 
 ``` r
 techBar
@@ -80,14 +98,42 @@ techBar
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
+Plotting technology ownership shows that the majority of respondents
+own:
+
+- DVD players
+- Desktop Computers
+- Flat Panel Televisions
+- Laptop Computers
+- Routers
+- Smartphones
+- Tablet
+
 ``` r
 watchBar
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+A plot of watch time of different forms of entertainment on different
+devices show TV’s reign supreme, being the most used device to watch
+sport, movies and TV shows. Computer’s/Laptop’s are the second most used
+device across all entertainment, followed by smartphones and lastly
+tablets. This result indicates that the type of entertainment does not
+drastically impact the devices used.
 
 ``` r
 subBar
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+Plotting household subscriptions shows that most individuals are
+subscribed to the following services:
+
+- Landline Telephone
+- Mobile data plan
+- Mobile Voice
+- PayTV
+
+Notably, video streaming services are nearly 50/50.
