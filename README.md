@@ -153,7 +153,19 @@ techDensityPlot
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
-watchtimeViolins
+plotViolins(movie_BIdf, "Watch Time per device vs Upgrading Internet - Movies")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+``` r
+plotViolins(tv_BIdf, "Watch Time per device vs Upgrading Internet - TV Shows")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
+
+``` r
+plotViolins(sport_BIdf, "Watch Time per device vs Upgrading Internet - Sport")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-3.png)<!-- -->

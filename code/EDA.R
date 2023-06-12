@@ -144,6 +144,8 @@ techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_counts, fill = factor(Upg
     theme_pubr()
 techDensityPlot
 
+
+
 #Wacthtime
 watchtime_BIdf <- cbind(finalDF[,1], watchtimeDF)
 colnames(watchtime_BIdf)[1] <- "UpgradeInternet"
@@ -164,17 +166,11 @@ plotViolins <- function(dat, title){
         scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
         labs(x = "Variable", y = "Value", fill = "Upgrade Internet")+
         ggtitle(title) +
-        scale_x_discrete(labels = c("Smartphone", "Tablet", "Computer", "TV"))
+        scale_x_discrete(labels = c("Smartphone", "Tablet", "Computer", "TV"))+
+        theme_pubr()
     return(watchtimeViolins)
 }
 
-arrangeViolins <- function(dat1,dat2,dat3){
-    v1 <- plotViolins(dat1,)
-    v2 <- plotViolins(dat2)
-    v3 <- plotViolins(dat3)
 
-    arranged <- ggarrange(v1,v2,v3, ncol = 1, nrow = 3)
-    return(arranged)
-}
 
 
