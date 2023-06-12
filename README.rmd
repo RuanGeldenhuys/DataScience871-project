@@ -19,6 +19,7 @@ library(hrbrthemes)
 library(stringr)
 library(ranger)
 library(caret)
+library(corrplot)
 ```
 
 Code files:
@@ -112,3 +113,14 @@ Plotting household subscriptions shows that most individuals are subscribed to t
 - PayTV
 
 Notably, video streaming services are nearly 50/50.
+
+
+### Bivariate Analysis
+
+```{r}
+ageDensityPlot
+```
+```{r}
+techDensityPlot
+```
+

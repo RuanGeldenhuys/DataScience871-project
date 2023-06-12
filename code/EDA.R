@@ -115,3 +115,29 @@ subBar <- ggplot(longSub, aes(fill=Yes_No, y=Num_People, x=Subscriptions)) +
     scale_fill_viridis(discrete = TRUE)+
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 subBar
+
+
+##Bivariate
+#Demographics vs Willingness to pay
+
+#Age
+age_BIdf <- finalDF %>%
+    select(c(1,2))
+
+ageDensityPlot <- ggplot(age_BIdf, aes(x = Age, fill = factor(UpgradeInternet))) +
+    geom_density(alpha = 0.5) +
+    labs(x = "Age", y = "Density", fill = "Upgrade Internet") +
+    scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
+    ggtitle("Age vs Upgrading Internet")
+ageDensityPlot
+
+#Techowned
+techAmount_BIdf <- finalDF %>%
+    select(c(1,30))
+
+techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_counts, fill = factor(UpgradeInternet))) +
+    geom_density(alpha = 0.5) +
+    labs(x = "Amount of devices owned", y = "Density", fill = "Upgrade Internet") +
+    scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
+    ggtitle("Technology ownership vs Upgrading Internet")
+techDensityPlot
