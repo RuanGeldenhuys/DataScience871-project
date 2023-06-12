@@ -43,6 +43,7 @@ YesString <- 'Yes'
 yes_counts <- apply(techownedDF, 1, function(row) sum(row == YesString))
 techownedDF <- cbind(techownedDF, yes_counts)
 
+
 #Tech preferences
 techprefDF <- masterDF[,c(60:78)]
 prefnames <- paste('pref', colnames(techownedDF), sep = '_')
@@ -89,6 +90,10 @@ colnames(subDF) <- subHeader
 subDF <- data.frame(lapply(subDF, factor))
 subDF <- subDF[,-2]
 
+YesString <- 'Yes'
+yes_counts2 <- apply(subDF, 1, function(row) sum(row == YesString))
+subDF <- cbind(subDF, yes_counts2)
+
 #Subscription preferences
 subprefDF <- masterDF[,c(141:150)]
 subprefHeader <- paste('pref', subHeader, sep = '_')
@@ -117,4 +122,5 @@ UpgradeInternet <- as.factor(UpgradeInternet)
 
 finalDF <- cbind(UpgradeInternet, demographicDF, techownedDF, techprefDF,
                  timespentDF, subDF, subprefDF, activityDF)
-
+colnames(finalDF)[30] <- "yes_tech"
+colnames(finalDF)[71] <- "yes_subs"

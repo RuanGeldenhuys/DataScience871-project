@@ -98,6 +98,8 @@ watchBar <- ggplot(longWatch, aes(fill=Appliance, y=avgwatch, x=Type))+
     scale_x_discrete(labels = c("Movies", "Sport", "TV Shows"))
 watchBar
 
+
+
 #Subscriptions
 longSub <- subDF %>%
     pivot_longer(
@@ -136,7 +138,7 @@ ageDensityPlot
 techAmount_BIdf <- finalDF %>%
     select(c(1,30))
 
-techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_counts, fill = factor(UpgradeInternet))) +
+techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_tech, fill = factor(UpgradeInternet))) +
     geom_density(alpha = 0.5) +
     labs(x = "Amount of devices owned", y = "Density", fill = "Upgrade Internet") +
     scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
@@ -144,11 +146,25 @@ techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_counts, fill = factor(Upg
     theme_pubr()
 techDensityPlot
 
+#Subscriptions
+subAmount_BIdf <- finalDF %>%
+    select(c(1, 71))
+
+subDensityPlot <- ggplot(subAmount_BIdf, aes(x = yes_subs, fill = factor(UpgradeInternet))) +
+    geom_density(alpha = 0.5) +
+    labs(x = "Amount of subscriptions owned", y = "Density", fill = "Upgrade Internet") +
+    scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
+    ggtitle("Subscription ownership vs Upgrading Internet") +
+    theme_pubr()
+subDensityPlot
+
+
 
 
 #Wacthtime
 watchtime_BIdf <- cbind(finalDF[,1], watchtimeDF)
 colnames(watchtime_BIdf)[1] <- "UpgradeInternet"
+
 movie_BIdf <- watchtime_BIdf %>%
     select(c(1:5))
 tv_BIdf <- watchtime_BIdf %>%

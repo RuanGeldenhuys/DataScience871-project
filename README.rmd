@@ -123,6 +123,11 @@ ageDensityPlot
 ```{r}
 techDensityPlot
 ```
+```{r}
+subDensityPlot
+```
+
+
 ```{r, fig.width=8, fig.height=6}
 plotViolins(movie_BIdf, "Watch Time per device vs Upgrading Internet - Movies")
 plotViolins(tv_BIdf, "Watch Time per device vs Upgrading Internet - TV Shows")
