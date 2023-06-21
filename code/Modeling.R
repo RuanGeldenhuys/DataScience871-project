@@ -1,6 +1,7 @@
 #Modeling
 library(tictoc)
-
+library(knitr)
+library(pander)
 ##Setting up training and testing set
 set.seed(246)
 indices <- createDataPartition(finalDF$UpgradeInternet, p = 0.8, list = FALSE)
@@ -33,6 +34,8 @@ treePlot
 
 ##Hyper parameter tuning
 Top10_models <- read.csv("data/parametertuning_results.csv")
+TuneResult <- Top10_models[1,] %>%
+    kable(.)
 
 ## Fit best model from hyperparameter tune
 bestmod1 <- ranger(
@@ -67,7 +70,7 @@ new_labels <- c(
     "SportTime_Tablet" = "Sport on Tablet",
     "Income" = "Income",
     "MovieTime_Computer" = "Movies on Computer",
-    "tvTime_Smartphone" = "TV Shows on Smartphone"
+    "tvTime_Computer" = "TV Shows on Computer"
 )
 
 ImportancePlot <- ggplot(VarImp10_df, aes(x = values, y = fct_reorder(ind, values))) +
@@ -81,11 +84,11 @@ ImportancePlot
 ##Confusion matrices
 predictions <- predict(bestmod1, data = train_set)$predictions
 conMat_train <- confusionMatrix(predictions, train_set$UpgradeInternet)
-confusion_table_train <- conMat_train$table
+cm_train <- as.table(conMat_train$table)
+
 
 predictionsTest <- predict(bestmod1, data = test_set)$predictions
 conMat_test <- confusionMatrix(predictionsTest, data = test_set$UpgradeInternet)
-confusion_table_test <- conMat_test$table
+cm_test <- conMat_test$table
 
-testtable <- confusionMatrix(test_set$UpgradeInternet, predictionsTest)
-testtable$table
+

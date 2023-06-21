@@ -176,6 +176,10 @@ plotViolins(sport_BIdf, "Watch Time per device vs Upgrading Internet - Sport")
 
 ![](README_files/figure-gfm/unnamed-chunk-12-3.png)<!-- -->
 
+## Modeling
+
+### Baseline Model
+
 ``` r
 rf1$prediction.error
 ```
@@ -197,15 +201,99 @@ treePlot
 
 ![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
+### Hyperparatemer tuning
+
 ``` r
-Top10_models[1,]
+TuneResult
 ```
 
-    ##   X mtry min.node.size replace sample.fraction splitrule predError      rmse
-    ## 1 1    8             7    TRUE               1      gini 0.2732372 0.5227209
+|   X | mtry | min.node.size | replace | sample.fraction | splitrule | predError |      rmse |
+|----:|-----:|--------------:|:--------|----------------:|:----------|----------:|----------:|
+|   1 |    8 |             7 | TRUE    |               1 | gini      | 0.2732372 | 0.5227209 |
+
+### Final Model
+
+``` r
+bestmod1$prediction.error
+```
+
+    ## [1] 0.2732372
+
+``` r
+bestmod1$confusion.matrix
+```
+
+    ##     predicted
+    ## true   0   1
+    ##    0 494 158
+    ##    1 183 413
+
+``` r
+conMat_train
+```
+
+    ## Confusion Matrix and Statistics
+    ## 
+    ##           Reference
+    ## Prediction   0   1
+    ##          0 650  18
+    ##          1   2 578
+    ##                                           
+    ##                Accuracy : 0.984           
+    ##                  95% CI : (0.9754, 0.9902)
+    ##     No Information Rate : 0.5224          
+    ##     P-Value [Acc > NIR] : < 2.2e-16       
+    ##                                           
+    ##                   Kappa : 0.9678          
+    ##                                           
+    ##  Mcnemar's Test P-Value : 0.0007962       
+    ##                                           
+    ##             Sensitivity : 0.9969          
+    ##             Specificity : 0.9698          
+    ##          Pos Pred Value : 0.9731          
+    ##          Neg Pred Value : 0.9966          
+    ##              Prevalence : 0.5224          
+    ##          Detection Rate : 0.5208          
+    ##    Detection Prevalence : 0.5353          
+    ##       Balanced Accuracy : 0.9834          
+    ##                                           
+    ##        'Positive' Class : 0               
+    ## 
+
+``` r
+conMat_test
+```
+
+    ## Confusion Matrix and Statistics
+    ## 
+    ##           Reference
+    ## Prediction   0   1
+    ##          0 123  39
+    ##          1  50  98
+    ##                                           
+    ##                Accuracy : 0.7129          
+    ##                  95% CI : (0.6591, 0.7626)
+    ##     No Information Rate : 0.5581          
+    ##     P-Value [Acc > NIR] : 1.476e-08       
+    ##                                           
+    ##                   Kappa : 0.4228          
+    ##                                           
+    ##  Mcnemar's Test P-Value : 0.2891          
+    ##                                           
+    ##             Sensitivity : 0.7110          
+    ##             Specificity : 0.7153          
+    ##          Pos Pred Value : 0.7593          
+    ##          Neg Pred Value : 0.6622          
+    ##              Prevalence : 0.5581          
+    ##          Detection Rate : 0.3968          
+    ##    Detection Prevalence : 0.5226          
+    ##       Balanced Accuracy : 0.7132          
+    ##                                           
+    ##        'Positive' Class : 0               
+    ## 
 
 ``` r
 ImportancePlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->

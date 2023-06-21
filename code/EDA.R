@@ -3,15 +3,16 @@
 #Age
 ageHist <- finalDF %>%
     ggplot(aes(x=Age))+
-    geom_histogram(bins = 37,fill='bisque3', color = 'white', alpha=0.9)+
+    geom_histogram(bins = 37,fill='#440154FF', color = 'yellow', alpha=1)+
     ggtitle("Distribution of Age")+
-    ylab("Count")
+    ylab("Count")+
+    theme_minimal()
 ageHist
 
 #Gender
 genderBar <- finalDF %>%
     ggplot(aes(x=reorder(Gender,Gender,length)))+
-    geom_bar(fill='bisque3', color = 'white', alpha=0.9)+
+    geom_bar(fill='#440154FF', color = 'yellow', alpha=1)+
     coord_flip() +
     ggtitle("Gender breakdown")+
     xlab('Gender')+
@@ -20,9 +21,10 @@ genderBar <- finalDF %>%
         aes(label = after_stat(count)),
         stat = "count",
         hjust = 1.5,
-        colour = 'black',
+        colour = 'white',
         size = 7
-    )
+    )+
+    theme_minimal()
 genderBar
 
 #Income distribution
@@ -33,9 +35,10 @@ finalDF$Income <- factor(finalDF$Income,
                                     ))
 incomeBar <- finalDF %>%
     ggplot(aes(x=Income)) +
-    geom_bar(fill='bisque3', color = 'white', alpha=0.9)+
+    geom_bar(fill='#440154FF', color = 'yellow', alpha=1)+
     ggtitle('Income Distribution')+
     ylab('Count')+
+    theme_minimal()+
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 incomeBar
 
@@ -46,10 +49,11 @@ levels(finalDF$Race) <- c("African American", "Caribbean",
                           "Not Listed", "South Asian", "White or Caucasian")
 ethBar <- finalDF %>%
     ggplot(aes(x=Race))+
-    geom_bar(fill='bisque3', color = 'white', alpha=0.9)+
+    geom_bar(fill='#440154FF', color = 'yellow', alpha=1)+
     ggtitle('Ethnicity Breakdown')+
     ylab('Count')+
-    coord_flip()
+    coord_flip()+
+    theme_minimal()
 ethBar
 
 demogPlot <- ggarrange(ageHist, genderBar, incomeBar, ethBar, ncol = 2, nrow = 2)
@@ -74,6 +78,7 @@ techBar <- ggplot(longtech, aes(fill=Yes_No, y=Num_People, x=Technology)) +
     ggtitle("Technology Ownership")+
     ylab('Count')+
     scale_fill_viridis(discrete = TRUE)+
+    theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 techBar
 
@@ -95,7 +100,8 @@ watchBar <- ggplot(longWatch, aes(fill=Appliance, y=avgwatch, x=Type))+
     scale_fill_viridis(discrete = T)+
     ylab("Average % Watch Time")+
     ggtitle("Entertainment Watch Time broken down Appliance")+
-    scale_x_discrete(labels = c("Movies", "Sport", "TV Shows"))
+    scale_x_discrete(labels = c("Movies", "Sport", "TV Shows"))+
+    theme_minimal()
 watchBar
 
 
@@ -116,6 +122,7 @@ subBar <- ggplot(longSub, aes(fill=Yes_No, y=Num_People, x=Subscriptions)) +
     ggtitle("Subscription Ownership")+
     ylab('Count')+
     scale_fill_viridis(discrete = TRUE)+
+    theme_minimal()+
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 subBar
 
@@ -132,7 +139,8 @@ ageDensityPlot <- ggplot(age_BIdf, aes(x = Age, fill = factor(UpgradeInternet)))
     labs(x = "Age", y = "Density", fill = "Upgrade Internet") +
     scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
     ggtitle("Age vs Upgrading Internet")+
-    theme_pubr()
+    theme_minimal()+
+    theme(legend.position = 'top')
 ageDensityPlot
 
 #Techowned
@@ -144,7 +152,8 @@ techDensityPlot <- ggplot(techAmount_BIdf, aes(x = yes_tech, fill = factor(Upgra
     labs(x = "Amount of devices owned", y = "Density", fill = "Upgrade Internet") +
     scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
     ggtitle("Technology ownership vs Upgrading Internet") +
-    theme_pubr()
+    theme_minimal()+
+    theme(legend.position = 'top')
 techDensityPlot
 
 #Subscriptions
@@ -188,6 +197,8 @@ plotViolins <- function(dat, title){
         theme_minimal()
     return(watchtimeViolins)
 }
+
+
 
 
 

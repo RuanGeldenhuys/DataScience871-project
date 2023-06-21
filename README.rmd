@@ -22,8 +22,6 @@ library(caret)
 library(corrplot)
 ```
 
-Code files:
-
 ```{r include=FALSE}
 initialDF <- read.csv('data/DeloitteMediaConsumptionSurvey.csv')
 source('code/DataCleaningFunctions.R')
@@ -117,16 +115,30 @@ Notably, video streaming services are nearly 50/50.
 
 ### Bivariate Analysis
 
+The density plots below shows a breakdown of individuals who would upgrade their internet package based on age, technology ownership and subscription ownership.
+
 ```{r}
 ageDensityPlot
 ```
+
+What is immediately clear from the graph above is the fact that younger people are far more likely to upgrade their internet speed. This peaks at around age 25. A large proportion of people who said no to upgrading their internet package are elderly.
+
+
+
 ```{r}
 techDensityPlot
 ```
+
+The density plot investigating technology ownership shows that the majority of people who said no, own few devices. In this survey atleast, people who own more devices are more likely to upgrade their internet speed.
+
+
 ```{r}
 subDensityPlot
 ```
 
+A similar story holds for subscriptions, with people who own more subscription are more likely to say yes.
+
+The violin charts below shows a breakdown of people who are willing to pay for upgraded internet based on different forms of entertainment and the devices used to view them.
 
 ```{r, fig.width=8, fig.height=6}
 plotViolins(movie_BIdf, "Watch Time per device vs Upgrading Internet - Movies")
@@ -134,8 +146,18 @@ plotViolins(tv_BIdf, "Watch Time per device vs Upgrading Internet - TV Shows")
 plotViolins(sport_BIdf, "Watch Time per device vs Upgrading Internet - Sport")
 ```
 
+Individuals who spent a significant amount of time watching Movies and TV Shows on a computer are more likely to be willing to upgrade. However, individuals who spend a large amount of consuming any form of entertainment on TV, are much more likely to say no to an upgrade. Smartphones and tablets provide less clear results for all forms of entertainment.
+
+## Modeling
+
+In order to predict which individuals are willing to upgrade their internet package I fit a Random Forest model. The target variable is the encoded as a 1 if the individual answered that they are willing to upgrade and 0 if they are not. A total of 89 features are used. The model is fitted using the ranger package.
+
+### Baseline Model
+
+The default model in the ranger package is used as the baseline model.
 ```{r}
-rf1$prediction.error
+paste("OOB Prediction Error:", round(rf1$prediction.error,3))
+paste("RMSE:", round(sqrt(rf1$prediction.error),3))
 rf1$confusion.matrix
 ```
 
@@ -143,8 +165,22 @@ rf1$confusion.matrix
 treePlot
 ```
 
+### Hyperparatemer tuning
+
 ```{r}
-Top10_models[1,]
+TuneResult
+```
+
+### Final Model
+
+```{r}
+bestmod1$prediction.error
+bestmod1$confusion.matrix
+```
+
+```{r}
+conMat_train
+conMat_test
 ```
 
 
