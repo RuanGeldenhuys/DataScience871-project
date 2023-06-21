@@ -102,6 +102,7 @@ watchBar
 
 #Subscriptions
 longSub <- subDF %>%
+    select(-yes_counts2) %>%
     pivot_longer(
         cols = everything(),
         names_to = "Subscriptions",
@@ -151,11 +152,12 @@ subAmount_BIdf <- finalDF %>%
     select(c(1, 71))
 
 subDensityPlot <- ggplot(subAmount_BIdf, aes(x = yes_subs, fill = factor(UpgradeInternet))) +
-    geom_density(alpha = 0.5) +
+    geom_density(alpha = 0.6) +
     labs(x = "Amount of subscriptions owned", y = "Density", fill = "Upgrade Internet") +
     scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
     ggtitle("Subscription ownership vs Upgrading Internet") +
-    theme_pubr()
+    theme_minimal()+
+    theme(legend.position = 'top')
 subDensityPlot
 
 
@@ -176,14 +178,14 @@ sport_BIdf <- watchtime_BIdf %>%
 plotViolins <- function(dat, title){
     df_long <- reshape2::melt(dat, id.vars = "UpgradeInternet")
 
-    # Create violin plots with overlapping categories based on UpgradeInternet
+
     watchtimeViolins <- ggplot(df_long, aes(x = variable, y = value, fill = factor(UpgradeInternet))) +
         geom_violin(scale = "width", trim = FALSE, position = "identity", alpha = 0.5) +
         scale_fill_viridis(discrete = TRUE, labels = c("No", "Yes")) +
         labs(x = "Variable", y = "Value", fill = "Upgrade Internet")+
         ggtitle(title) +
         scale_x_discrete(labels = c("Smartphone", "Tablet", "Computer", "TV"))+
-        theme_pubr()
+        theme_minimal()
     return(watchtimeViolins)
 }
 

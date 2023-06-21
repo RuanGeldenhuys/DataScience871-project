@@ -153,19 +153,59 @@ techDensityPlot
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
-plotViolins(movie_BIdf, "Watch Time per device vs Upgrading Internet - Movies")
+subDensityPlot
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
+plotViolins(movie_BIdf, "Watch Time per device vs Upgrading Internet - Movies")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+``` r
 plotViolins(tv_BIdf, "Watch Time per device vs Upgrading Internet - TV Shows")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
 
 ``` r
 plotViolins(sport_BIdf, "Watch Time per device vs Upgrading Internet - Sport")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-3.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-3.png)<!-- -->
+
+``` r
+rf1$prediction.error
+```
+
+    ## [1] 0.2900641
+
+``` r
+rf1$confusion.matrix
+```
+
+    ##     predicted
+    ## true   0   1
+    ##    0 479 173
+    ##    1 189 407
+
+``` r
+treePlot
+```
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+``` r
+Top10_models[1,]
+```
+
+    ##   X mtry min.node.size replace sample.fraction splitrule predError      rmse
+    ## 1 1    8             7    TRUE               1      gini 0.2732372 0.5227209
+
+``` r
+ImportancePlot
+```
+
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->

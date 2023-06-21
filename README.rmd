@@ -134,3 +134,21 @@ plotViolins(tv_BIdf, "Watch Time per device vs Upgrading Internet - TV Shows")
 plotViolins(sport_BIdf, "Watch Time per device vs Upgrading Internet - Sport")
 ```
 
+```{r}
+rf1$prediction.error
+rf1$confusion.matrix
+```
+
+```{r}
+treePlot
+```
+
+```{r}
+Top10_models[1,]
+```
+
+
+```{r}
+ImportancePlot
+```
+
