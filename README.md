@@ -6,8 +6,9 @@ Data Science 871 project
 The purpose of this project is to use survey data in order to determine
 which factors are important predictors of whether individuals would be
 willing to upgrade their internet packages. All code and functions are
-stored under the “code” folder. This readme is solely for visualization
-of data and results.
+stored under the ‘code’ folder. This readme is solely for visualization
+of data and results. The formal pdf can be found in
+‘bin/DataScienceProject_RuanGeldenhuys.pdf’.
 
 ## Data loading and cleaning
 
