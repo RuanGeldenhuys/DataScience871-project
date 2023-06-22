@@ -243,7 +243,7 @@ model has no preference for a certain type of mistake, with 173 false
 negatives and 189 false positives.
 
 I plot baseline model Mean Squared Error (MSE) for an increasing number
-of trees in Figure 11 below.
+of trees in the figure below.
 
 ``` r
 treePlot
@@ -407,14 +407,15 @@ shown in the figure below.
 ImportancePlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- --> Age is by
-far the most important predictor, followed by other demographic factors
-like child’s age, employment status and income. In terms of media
-consumption, the amount of devices owned plays a large role. Several
-features involving entertainment on specific devices also show up in the
-top 10 features. However, in order to properly interpret these features
-one needs to compare them with the exploratory data analysis done
-earlier.
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+Age is by far the most important predictor, followed by other
+demographic factors like child’s age, employment status and income. In
+terms of media consumption, the amount of devices owned plays a large
+role. Several features involving entertainment on specific devices also
+show up in the top 10 features. However, in order to properly interpret
+these features one needs to compare them with the exploratory data
+analysis done earlier.
 
 ## Conclusion
 

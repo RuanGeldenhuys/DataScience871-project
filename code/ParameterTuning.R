@@ -1,3 +1,7 @@
+##This script is used for parameter tuning. The results are exported to
+##a .csv where they can be called at anytime without the need to run the
+##grid search again.
+
 #Trees
 nt <- seq(1,2000,10)
 oob_mse <- vector("numeric", length(nt))
@@ -32,7 +36,7 @@ hyper_grid <- expand.grid(
 )
 tic()
 for(i in seq_len(nrow(hyper_grid))) {
-    # fit model for ith hyperparameter combination
+    # loop through grid and fir RF's
     fit <- ranger(
         formula         = UpgradeInternet ~ .,
         data            = train_set,

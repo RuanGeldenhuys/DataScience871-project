@@ -164,7 +164,7 @@ rf1$confusion.matrix
 The baseline model reports an Out-of-Bag (OOB) prediction error of 29% which equates to an Root Mean Squared Error (RMSE) of 0.539. This is a decent accuracy for a model with no tuning, which is a strength of Random Forests as stated earlier. The confusion matrix shows that the model has no preference for a certain type of mistake, with 173 false negatives and 189 false positives.
 
 
-I plot baseline model Mean Squared Error (MSE) for an increasing number of trees in Figure 11 below.
+I plot baseline model Mean Squared Error (MSE) for an increasing number of trees in the figure below.
 ```{r}
 treePlot
 ```
@@ -206,6 +206,7 @@ In order to interpret the model I turn the relative variable importance. Simply 
 ```{r}
 ImportancePlot
 ```
+
 Age is by far the most important predictor, followed by other demographic factors like child's age, employment status and income. In terms of media consumption, the amount of devices owned plays a large role. Several features involving entertainment on specific devices also show up in the top 10 features. However, in order to properly interpret these features one needs to compare them with the exploratory data analysis done earlier.
 
 ## Conclusion
