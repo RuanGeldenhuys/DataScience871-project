@@ -9,8 +9,6 @@ willing to upgrade their internet packages. All code and functions are
 stored under the “code” folder. This readme is solely for visualization
 of data and results.
 
-Code files:
-
 ## Data loading and cleaning
 
 The data set contains survey responses from 2131 individuals regarding
@@ -140,11 +138,20 @@ Notably, video streaming services are nearly 50/50.
 
 ### Bivariate Analysis
 
+The density plots below shows a breakdown of individuals who would
+upgrade their internet package based on age, technology ownership and
+subscription ownership.
+
 ``` r
 ageDensityPlot
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+What is immediately clear from the graph above is the fact that younger
+people are far more likely to upgrade their internet speed. This peaks
+at around age 25. A large proportion of people who said no to upgrading
+their internet package are elderly.
 
 ``` r
 techDensityPlot
@@ -152,11 +159,23 @@ techDensityPlot
 
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
+The density plot investigating technology ownership shows that the
+majority of people who said no, own few devices. In this survey atleast,
+people who own more devices are more likely to upgrade their internet
+speed.
+
 ``` r
 subDensityPlot
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+A similar story holds for subscriptions, with people who own more
+subscription are more likely to say yes.
+
+The violin charts below shows a breakdown of people who are willing to
+pay for upgraded internet based on different forms of entertainment and
+the devices used to view them.
 
 ``` r
 plotViolins(movie_BIdf, "Watch Time per device vs Upgrading Internet - Movies")
@@ -176,15 +195,36 @@ plotViolins(sport_BIdf, "Watch Time per device vs Upgrading Internet - Sport")
 
 ![](README_files/figure-gfm/unnamed-chunk-12-3.png)<!-- -->
 
+Individuals who spent a significant amount of time watching Movies and
+TV Shows on a computer are more likely to be willing to upgrade.
+However, individuals who spend a large amount of consuming any form of
+entertainment on TV, are much more likely to say no to an upgrade.
+Smartphones and tablets provide less clear results for all forms of
+entertainment.
+
 ## Modeling
+
+In order to predict which individuals are willing to upgrade their
+internet package I fit a Random Forest model. The target variable is the
+encoded as a 1 if the individual answered that they are willing to
+upgrade and 0 if they are not. A total of 89 features are used. The
+model is fitted using the ranger package.
 
 ### Baseline Model
 
+The default model in the ranger package is used as the baseline model.
+
 ``` r
-rf1$prediction.error
+paste("OOB Prediction Error:", round(rf1$prediction.error,3))
 ```
 
-    ## [1] 0.2900641
+    ## [1] "OOB Prediction Error: 0.29"
+
+``` r
+paste("RMSE:", round(sqrt(rf1$prediction.error),3))
+```
+
+    ## [1] "RMSE: 0.539"
 
 ``` r
 rf1$confusion.matrix
@@ -195,13 +235,39 @@ rf1$confusion.matrix
     ##    0 479 173
     ##    1 189 407
 
+The baseline model reports an Out-of-Bag (OOB) prediction error of 29%
+which equates to an Root Mean Squared Error (RMSE) of 0.539. This is a
+decent accuracy for a model with no tuning, which is a strength of
+Random Forests as stated earlier. The confusion matrix shows that the
+model has no preference for a certain type of mistake, with 173 false
+negatives and 189 false positives.
+
+I plot baseline model Mean Squared Error (MSE) for an increasing number
+of trees in Figure 11 below.
+
 ``` r
 treePlot
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
+For a small number of trees a drastic reduction in MSE is observed. This
+reduction seems to stabilise at around 500 trees. Although a lower MSE
+is possible by fitting more trees, this can cause issues. Using more
+trees increases the complexity of the model and thus increases the
+computational power required. Simply put, the reduction in errors do not
+justify the additional resources invested. Additionally, using a higher
+number of trees increases the chance that the model is overfitted, which
+means performance will suffer when introducing new data. I therefore
+continue with 500 trees in subsequent modeling.
+
 ### Hyperparatemer tuning
+
+Hyperparameter tuning was done using a standard grid search. In essence,
+each parameter is given a range in which the search will take place. A
+grid of all possible parameter combinations is created and models are
+iteratively fitted for every combination and the model with the lowest
+RMSE is selected.
 
 ``` r
 TuneResult
@@ -211,13 +277,26 @@ TuneResult
 |----:|-----:|--------------:|:--------|----------------:|:----------|----------:|----------:|
 |   1 |    8 |             7 | TRUE    |               1 | gini      | 0.2732372 | 0.5227209 |
 
+The table above shows the best model found. The grid search yielded only
+a marginal improvement, with an 0.273 OOB prediction error, which
+equates to an RMSE 0.523. This is a 0.016 RMSE improvement from the
+baseline model.
+
 ### Final Model
 
+The best model found by the grid search above is fitted.
+
 ``` r
-bestmod1$prediction.error
+paste("OOB Prediction Error:", round(bestmod1$prediction.error,3))
 ```
 
-    ## [1] 0.2732372
+    ## [1] "OOB Prediction Error: 0.273"
+
+``` r
+paste("RMSE:", round(sqrt(bestmod1$prediction.error),3))
+```
+
+    ## [1] "RMSE: 0.523"
 
 ``` r
 bestmod1$confusion.matrix
@@ -227,6 +306,19 @@ bestmod1$confusion.matrix
     ## true   0   1
     ##    0 494 158
     ##    1 183 413
+
+As stated above, this model gives marginally better predictions. The
+confusion matrix once again shows that the model has no preference for a
+certain type of mistake.
+
+The next step is to use the model to run predictions on both the
+training and testing set. Note however that that the confusion matrix
+and error rates for the training set predictions are different. This is
+due to the fact that OOB errors are calculated at each individual tree,
+based on predictions that tree makes on data not used to build it, and
+then aggregated across trees. Predictions across the training set,
+utilise all trees and all data, and merely counts the number of
+observations the model correctly predicted.
 
 ``` r
 conMat_train
@@ -292,8 +384,54 @@ conMat_test
     ##        'Positive' Class : 0               
     ## 
 
+Predictions on the training set shows an accuracy of 98.4%. Positive
+values are correctly predicted 99.7% of the time and negative values
+96.9% of the time. However these results are not representative since
+the model has seen this data before. Predictions on testing data tend to
+be closer to the OOB accuracy and thus more representative.
+
+The final model has a 71.29% accuracy when predicting data it has not
+seen before. It accurately predicts 71.11% of individuals who would be
+willing to upgrade their internet package and 71.53% of individuals who
+would not. The confusion matrix also shows that the model has no
+preference for making a certain type of mistake.
+
+In order to interpret the model I turn the relative variable importance.
+Simply put, variable importance is calculated by counting how many times
+a variable is used for splitting a node. Variables that carry more
+weight in splitting the data, will appear more when selecting a variable
+from a subset of features at each splitting point. These results are
+shown in the figure below.
+
 ``` r
 ImportancePlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- --> Age is by
+far the most important predictor, followed by other demographic factors
+like child’s age, employment status and income. In terms of media
+consumption, the amount of devices owned plays a large role. Several
+features involving entertainment on specific devices also show up in the
+top 10 features. However, in order to properly interpret these features
+one needs to compare them with the exploratory data analysis done
+earlier.
+
+## Conclusion
+
+As stated above, age seems to be the most important feature. Its clear
+from the EDA that young people are more likely to upgrade their
+internet. Thus if this model were to be used for targeted advertising,
+these ads should focus on people in their 20’s. Technology ownership is
+another important feature, and as the EDA showed, the marketing efforts
+should be focused on individuals with more than 8 devices in their
+household. As for which the devices to target, the model, together with
+the EDA, shows that individuals who enjoy their entertainment on
+smartphones, computers and tablets should be targeted.
+
+In conclusion, the Random Forest was able to predict what individuals
+would be willing to upgrade their internet package with a 71.28%
+accuracy. The model was balanced in its errors, as it did not perform
+worse for a particular group. An analysis of variable importance,
+together with the bivariate analysis of features showed that marketing
+should be directed to young individuals, who own several devices and
+prefer to watch their entertainment on devices that are not televisions.
